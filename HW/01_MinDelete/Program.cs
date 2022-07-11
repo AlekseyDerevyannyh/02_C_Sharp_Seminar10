@@ -12,22 +12,22 @@ int[,] Array = GetRandomArray(m, n, 10, 99);
 PrintArray(Array);
 WriteLine();
 WriteLine("Массив с удалёнными строкой и столбцом на пересечении которых расположен наименьший элемент:");
-PrintArray(DeleteMinElement(Array));
+int[] indexMin = FindIndexMinElement(Array);
+PrintArray(DeleteElement(Array, indexMin[0], indexMin[1]));
 
 
-int[,] DeleteMinElement (int[,] array) {
+int[,] DeleteElement (int[,] array, int row, int column) {
 	if (array.GetLength(0) < 2 || array.GetLength(1) < 2) {
 		WriteLine("ОШИБКА! Размерности массива должны быть >= 2");
 		return new int[,]{{0}};
 	}
 	int[,] result = new int[array.GetLength(0) - 1, array.GetLength(1) - 1];
-	int[] indexMin = FindIndexMinElement(array);
 	for (int i = 0; i < array.GetLength(0); i ++)
 		for (int j = 0; j < array.GetLength(1); j ++) {
-			if (i < indexMin[0] && j < indexMin[1]) { result[i, j] = array[i, j];			continue; }
-			if (i > indexMin[0] && j < indexMin[1]) { result[i - 1, j] = array[i, j];		continue; }
-			if (i < indexMin[0] && j > indexMin[1]) { result[i, j - 1] = array[i, j];		continue; }
-			if (i > indexMin[0] && j > indexMin[1]) { result[i - 1, j - 1] = array[i, j];	continue; }
+			if (i < row && j < column) { result[i, j] = array[i, j];			continue; }
+			if (i > row && j < column) { result[i - 1, j] = array[i, j];		continue; }
+			if (i < row && j > column) { result[i, j - 1] = array[i, j];		continue; }
+			if (i > row && j > column) { result[i - 1, j - 1] = array[i, j];	continue; }
 		}
 	return result;
 }
